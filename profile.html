@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile — SolarLedger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+
+<div class="dash-shell">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-mark"><span></span><span></span><span></span><span></span></span>
+      SolarLedger
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="sidebar-link">Dashboard</a>
+      <a href="dashboard.html#plant" class="sidebar-link">Plant Details</a>
+      <a href="dashboard.html#analytics" class="sidebar-link">Analytics</a>
+      <a href="maintenance.html" class="sidebar-link">Maintenance</a>
+      <a href="reports.html" class="sidebar-link">Reports</a>
+      <a href="profile.html" class="sidebar-link active">Profile</a>
+    </nav>
+    <a href="index.html" class="sidebar-logout">Log Out</a>
+  </aside>
+
+  <main class="dash-main">
+    <header class="dash-topbar">
+      <div>
+        <div class="dash-greeting">Profile</div>
+        <div class="dash-sub">Manage your account details.</div>
+      </div>
+      <div class="dash-user">JD</div>
+    </header>
+
+    <section class="dash-grid profile-grid">
+      <div class="panel-card profile-card">
+        <div class="profile-avatar">JD</div>
+        <h3 class="profile-name">Jane Doe</h3>
+        <p class="profile-email">khushijaju4@gmail.com</p>
+        <div class="profile-meta">
+          <div class="profile-meta-row">
+            <span>Role</span>
+            <span>Plant Owner</span>
+          </div>
+          <div class="profile-meta-row">
+            <span>Member Since</span>
+            <span>14 Mar 2023</span>
+          </div>
+          <div class="profile-meta-row">
+            <span>Plants</span>
+            <span>1</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <div class="panel-header">
+          <h3>Edit Profile</h3>
+        </div>
+        <form id="profileForm" class="auth-form">
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" value="Jane Doe">
+          </div>
+          <div class="form-group">
+            <label for="profileEmail">Email</label>
+            <input type="email" id="profileEmail" value="khushijaju4@gmail.com">
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="+91 00000 00000">
+          </div>
+
+          <p class="form-error" id="profileError"></p>
+          <p class="form-success" id="profileSuccess"></p>
+
+          <button type="submit" class="btn-primary auth-submit">Save Changes</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

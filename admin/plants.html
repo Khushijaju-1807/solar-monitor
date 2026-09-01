@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plant Management — SolarLedger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body class="dashboard-body">
+
+<div class="dash-shell">
+
+  <aside class="sidebar admin-sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-mark"><span></span><span></span><span></span><span></span></span>
+      SolarLedger
+    </div>
+    <span class="admin-tag">ADMIN</span>
+    <nav class="sidebar-nav">
+      <a href="admin-dashboard.html" class="sidebar-link">Dashboard</a>
+      <a href="users.html" class="sidebar-link">User Management</a>
+      <a href="plants.html" class="sidebar-link active">Plant Management</a>
+      <a href="maintenance.html" class="sidebar-link">Maintenance</a>
+      <a href="../reports.html" class="sidebar-link">Reports</a>
+    </nav>
+    <a href="../index.html" class="sidebar-logout">Log Out</a>
+  </aside>
+
+  <main class="dash-main">
+    <header class="dash-topbar">
+      <div>
+        <div class="dash-greeting">Plant Management</div>
+        <div class="dash-sub">Register and oversee every plant across every site.</div>
+      </div>
+      <div class="dash-user admin-avatar">AD</div>
+    </header>
+
+    <section class="panel-card wide">
+      <div class="panel-header">
+        <h3>All Plants</h3>
+        <button class="btn-primary" id="addPlantBtn" style="border:none;cursor:pointer;font-family:'Inter',sans-serif;">+ Add Plant</button>
+      </div>
+      <table class="report-table">
+        <thead>
+          <tr>
+            <th>Plant Name</th>
+            <th>Owner</th>
+            <th>Capacity</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="plantTableBody">
+          <tr>
+            <td>Rooftop Array — Sector 4</td>
+            <td>Jane Doe</td>
+            <td class="mono">10 kW</td>
+            <td>Ahilyanagar, MH</td>
+            <td><span class="ticket-status assigned">Online</span></td>
+            <td><button class="report-link-btn plant-remove-btn">Remove</button></td>
+          </tr>
+          <tr>
+            <td>Farmhouse Array</td>
+            <td>Ravi Kulkarni</td>
+            <td class="mono">6.5 kW</td>
+            <td>Pune, MH</td>
+            <td><span class="ticket-status assigned">Online</span></td>
+            <td><button class="report-link-btn plant-remove-btn">Remove</button></td>
+          </tr>
+          <tr>
+            <td>Warehouse Roof — Unit 2</td>
+            <td>Ravi Kulkarni</td>
+            <td class="mono">22 kW</td>
+            <td>Pune, MH</td>
+            <td><span class="ticket-status in-progress">Fault</span></td>
+            <td><button class="report-link-btn plant-remove-btn">Remove</button></td>
+          </tr>
+          <tr>
+            <td>Residence Rooftop</td>
+            <td>Meera Shah</td>
+            <td class="mono">4 kW</td>
+            <td>Nashik, MH</td>
+            <td><span class="ticket-status closed">Offline</span></td>
+            <td><button class="report-link-btn plant-remove-btn">Remove</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+</div>
+
+<script src="../script.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maintenance Management — SolarLedger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body class="dashboard-body">
+
+<div class="dash-shell">
+
+  <aside class="sidebar admin-sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-mark"><span></span><span></span><span></span><span></span></span>
+      SolarLedger
+    </div>
+    <span class="admin-tag">ADMIN</span>
+    <nav class="sidebar-nav">
+      <a href="admin-dashboard.html" class="sidebar-link">Dashboard</a>
+      <a href="users.html" class="sidebar-link">User Management</a>
+      <a href="plants.html" class="sidebar-link">Plant Management</a>
+      <a href="maintenance.html" class="sidebar-link active">Maintenance</a>
+      <a href="../reports.html" class="sidebar-link">Reports</a>
+    </nav>
+    <a href="../index.html" class="sidebar-logout">Log Out</a>
+  </aside>
+
+  <main class="dash-main">
+    <header class="dash-topbar">
+      <div>
+        <div class="dash-greeting">Maintenance Management</div>
+        <div class="dash-sub">Assign tickets, set priority, and track every job to close.</div>
+      </div>
+      <div class="dash-user admin-avatar">AD</div>
+    </header>
+
+    <section class="panel-card wide">
+      <div class="panel-header">
+        <h3>All Requests</h3>
+      </div>
+      <table class="report-table">
+        <thead>
+          <tr>
+            <th>Issue</th>
+            <th>Raised By</th>
+            <th>Plant</th>
+            <th>Technician</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="adminTicketBody">
+          <tr>
+            <td>Inverter Fault</td>
+            <td>Jane Doe</td>
+            <td>Rooftop Array — Sector 4</td>
+            <td>Unassigned</td>
+            <td><span class="ticket-status in-progress">In Progress</span></td>
+            <td>
+              <select class="report-link-btn ticket-status-select">
+                <option value="assigned">Assigned</option>
+                <option value="in-progress" selected>In Progress</option>
+                <option value="closed">Closed</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>Low Output — Cluster B</td>
+            <td>Ravi Kulkarni</td>
+            <td>Warehouse Roof — Unit 2</td>
+            <td>Sameer Patil</td>
+            <td><span class="ticket-status assigned">Assigned</span></td>
+            <td>
+              <select class="report-link-btn ticket-status-select">
+                <option value="assigned" selected>Assigned</option>
+                <option value="in-progress">In Progress</option>
+                <option value="closed">Closed</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>Physical Damage — Panel 4</td>
+            <td>Meera Shah</td>
+            <td>Residence Rooftop</td>
+            <td>Sameer Patil</td>
+            <td><span class="ticket-status closed">Closed</span></td>
+            <td>
+              <select class="report-link-btn ticket-status-select">
+                <option value="assigned">Assigned</option>
+                <option value="in-progress">In Progress</option>
+                <option value="closed" selected>Closed</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+</div>
+
+<script src="../script.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Log In — SolarLedger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-mark"><span></span><span></span><span></span><span></span></span>
+      SolarLedger
+    </a>
+  </div>
+</nav>
+
+<section class="auth-section">
+  <div class="auth-card">
+    <span class="eyebrow" style="margin-bottom:8px;">Welcome back</span>
+    <h1>Log in to SolarLedger</h1>
+    <p class="auth-sub">Enter your details to reach your dashboard.</p>
+
+    <form id="loginForm" class="auth-form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="••••••••">
+      </div>
+
+      <div class="role-toggle">
+        <label class="role-option">
+          <input type="radio" name="role" value="user" checked>
+          <span>Plant Owner</span>
+        </label>
+        <label class="role-option">
+          <input type="radio" name="role" value="admin">
+          <span>Admin</span>
+        </label>
+      </div>
+
+      <p class="form-error" id="formError"></p>
+
+      <button type="submit" class="btn-primary auth-submit">Log In</button>
+    </form>
+
+    <div class="auth-footer">
+      <a href="#">Forgot password?</a>
+      <span>·</span>
+      <span>Don't have an account? <a href="register.html">Register</a></span>
+    </div>
+  </div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>

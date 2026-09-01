@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maintenance — SolarLedger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+
+<div class="dash-shell">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-mark"><span></span><span></span><span></span><span></span></span>
+      SolarLedger
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="sidebar-link">Dashboard</a>
+      <a href="dashboard.html#plant" class="sidebar-link">Plant Details</a>
+      <a href="dashboard.html#analytics" class="sidebar-link">Analytics</a>
+      <a href="maintenance.html" class="sidebar-link active">Maintenance</a>
+      <a href="reports.html" class="sidebar-link">Reports</a>
+      <a href="profile.html" class="sidebar-link">Profile</a>
+    </nav>
+    <a href="index.html" class="sidebar-logout">Log Out</a>
+  </aside>
+
+  <main class="dash-main">
+    <header class="dash-topbar">
+      <div>
+        <div class="dash-greeting">Maintenance</div>
+        <div class="dash-sub">Raise a new request or track existing ones.</div>
+      </div>
+      <div class="dash-user">JD</div>
+    </header>
+
+    <section class="dash-grid maintenance-grid">
+      <div class="panel-card">
+        <div class="panel-header">
+          <h3>Raise a Request</h3>
+        </div>
+        <form id="maintenanceForm" class="auth-form">
+          <div class="form-group">
+            <label for="issueType">Issue Type</label>
+            <select id="issueType" class="form-select">
+              <option value="">Select an issue type</option>
+              <option value="low-output">Low Output</option>
+              <option value="inverter">Inverter Fault</option>
+              <option value="physical">Physical Damage</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="issueDesc">Description</label>
+            <textarea id="issueDesc" class="form-textarea" placeholder="Describe the issue in a few lines..."></textarea>
+          </div>
+
+          <p class="form-error" id="maintenanceError"></p>
+
+          <button type="submit" class="btn-primary auth-submit">Submit Request</button>
+        </form>
+      </div>
+
+      <div class="panel-card">
+        <div class="panel-header">
+          <h3>Your Requests</h3>
+        </div>
+        <div class="ticket-list" id="ticketList">
+          <div class="ticket-row">
+            <div>
+              <div class="ticket-title">Inverter Fault</div>
+              <div class="ticket-date">Raised 2 Aug 2026</div>
+            </div>
+            <span class="ticket-status in-progress">In Progress</span>
+          </div>
+          <div class="ticket-row">
+            <div>
+              <div class="ticket-title">Low Output — Cluster B</div>
+              <div class="ticket-date">Raised 28 Jul 2026</div>
+            </div>
+            <span class="ticket-status assigned">Assigned</span>
+          </div>
+          <div class="ticket-row">
+            <div>
+              <div class="ticket-title">Physical Damage — Panel 4</div>
+              <div class="ticket-date">Raised 12 Jul 2026</div>
+            </div>
+            <span class="ticket-status closed">Closed</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

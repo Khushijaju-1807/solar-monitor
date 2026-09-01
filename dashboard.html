@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — SolarLedger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+</head>
+<body class="dashboard-body">
+
+<div class="dash-shell">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-mark"><span></span><span></span><span></span><span></span></span>
+      SolarLedger
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="sidebar-link active">Dashboard</a>
+      <a href="#plant" class="sidebar-link">Plant Details</a>
+      <a href="#analytics" class="sidebar-link">Analytics</a>
+      <a href="maintenance.html" class="sidebar-link">Maintenance</a>
+      <a href="reports.html" class="sidebar-link">Reports</a>
+      <a href="profile.html" class="sidebar-link">Profile</a>
+    </nav>
+    <a href="index.html" class="sidebar-logout">Log Out</a>
+  </aside>
+
+  <main class="dash-main">
+    <header class="dash-topbar">
+      <div>
+        <div class="dash-greeting">Good afternoon, Jane</div>
+        <div class="dash-sub">Here's how your plant is doing today.</div>
+      </div>
+      <div class="dash-user">JD</div>
+    </header>
+
+    <section class="stat-row">
+      <div class="stat-card">
+        <div class="stat-label">Today's Generation</div>
+        <div class="stat-value mono gold">42.8 <span>kWh</span></div>
+        <div class="stat-delta up">▲ 6.2% vs yesterday</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">This Month</div>
+        <div class="stat-value mono">1,284 <span>kWh</span></div>
+        <div class="stat-delta up">▲ 3.1% vs last month</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">System Status</div>
+        <div class="stat-value mono cyan">Healthy</div>
+        <div class="stat-delta neutral">All panels reporting</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Active Faults</div>
+        <div class="stat-value mono amber">1</div>
+        <div class="stat-delta down">Needs attention</div>
+      </div>
+    </section>
+
+    <section class="dash-grid" id="plant">
+      <div class="panel-card">
+        <div class="panel-header">
+          <h3>Solar Plant Details</h3>
+        </div>
+        <div class="plant-detail-list">
+          <div class="plant-detail-row">
+            <span>Plant Name</span>
+            <span>Rooftop Array — Sector 4</span>
+          </div>
+          <div class="plant-detail-row">
+            <span>Capacity</span>
+            <span>10 kW</span>
+          </div>
+          <div class="plant-detail-row">
+            <span>Location</span>
+            <span>Ahilyanagar, Maharashtra</span>
+          </div>
+          <div class="plant-detail-row">
+            <span>Installed On</span>
+            <span>14 Mar 2023</span>
+          </div>
+          <div class="plant-detail-row">
+            <span>Inverter</span>
+            <span>Growatt 10kW Hybrid</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <div class="panel-header">
+          <h3>Electricity Savings</h3>
+        </div>
+        <div class="savings-box">
+          <div class="savings-amount mono gold">₹3,420</div>
+          <div class="savings-label">Saved this month</div>
+          <div class="savings-note">Based on your local tariff of ₹8/unit and 1,284 kWh generated this month.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel-card wide" id="analytics">
+      <div class="panel-header">
+        <h3>Energy Analytics</h3>
+        <div class="chart-tabs">
+          <button class="chart-tab active" data-range="week">Week</button>
+          <button class="chart-tab" data-range="month">Month</button>
+          <button class="chart-tab" data-range="year">Year</button>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="energyChart"></canvas>
+      </div>
+    </section>
+
+    <section class="dash-grid ai-dash-grid">
+      <div class="panel-card ai-panel">
+        <div class="panel-header">
+          <h3>AI Prediction</h3>
+          <span class="tag">Tomorrow</span>
+        </div>
+        <div class="prediction-value mono gold">28.4 <span>kWh expected</span></div>
+        <p class="prediction-note">Based on historical output, panel angle, and tomorrow's forecasted weather (partly cloudy, 31°C).</p>
+      </div>
+
+      <div class="panel-card ai-panel fault-panel">
+        <div class="panel-header">
+          <h3>Fault Detection</h3>
+          <span class="fault-badge">1 alert</span>
+        </div>
+        <div class="fault-alert">
+          <div class="fault-alert-icon">⚠</div>
+          <div>
+            <div class="fault-alert-title">Panel Cluster B — Output 22% below average</div>
+            <div class="fault-alert-desc">Recommended action: inspect for shading or dust buildup on Cluster B, or schedule an inverter check.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
