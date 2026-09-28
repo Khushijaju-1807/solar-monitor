@@ -34,26 +34,26 @@
         <div class="dash-greeting">Profile</div>
         <div class="dash-sub">Manage your account details.</div>
       </div>
-      <div class="dash-user">JD</div>
+      <div class="dash-user" id="dashUserInitials">--</div>
     </header>
 
     <section class="dash-grid profile-grid">
       <div class="panel-card profile-card">
-        <div class="profile-avatar">JD</div>
-        <h3 class="profile-name">Jane Doe</h3>
-        <p class="profile-email">khushijaju4@gmail.com</p>
+        <div class="profile-avatar" id="profileAvatar">--</div>
+        <h3 class="profile-name" id="profileNameDisplay">—</h3>
+        <p class="profile-email" id="profileEmailDisplay">—</p>
         <div class="profile-meta">
           <div class="profile-meta-row">
             <span>Role</span>
-            <span>Plant Owner</span>
+            <span id="profileRoleValue">—</span>
           </div>
           <div class="profile-meta-row">
             <span>Member Since</span>
-            <span>14 Mar 2023</span>
+            <span id="profileSinceValue">—</span>
           </div>
           <div class="profile-meta-row">
             <span>Plants</span>
-            <span>1</span>
+            <span id="profilePlantsValue">—</span>
           </div>
         </div>
       </div>
@@ -65,11 +65,11 @@
         <form id="profileForm" class="auth-form">
           <div class="form-group">
             <label for="fullName">Full Name</label>
-            <input type="text" id="fullName" value="Jane Doe">
+            <input type="text" id="fullName">
           </div>
           <div class="form-group">
             <label for="profileEmail">Email</label>
-            <input type="email" id="profileEmail" value="khushijaju4@gmail.com">
+            <input type="email" id="profileEmail">
           </div>
           <div class="form-group">
             <label for="phone">Phone Number</label>
@@ -82,12 +82,33 @@
           <button type="submit" class="btn-primary auth-submit">Save Changes</button>
         </form>
       </div>
+
+      <div class="panel-card">
+        <div class="panel-header">
+          <h3>Change Password</h3>
+        </div>
+        <form id="passwordForm" class="auth-form">
+          <div class="form-group">
+            <label for="currentPassword">Current Password</label>
+            <input type="password" id="currentPassword">
+          </div>
+          <div class="form-group">
+            <label for="newPassword">New Password</label>
+            <input type="password" id="newPassword">
+          </div>
+
+          <p class="form-error" id="passwordError"></p>
+          <p class="form-success" id="passwordSuccess"></p>
+
+          <button type="submit" class="btn-primary auth-submit">Update Password</button>
+        </form>
+      </div>
     </section>
 
   </main>
 
 </div>
 
-<script src="script.js"></script>
+<script src="script.js?v=2"></script>
 </body>
 </html>

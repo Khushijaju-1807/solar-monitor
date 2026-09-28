@@ -32,10 +32,10 @@
   <main class="dash-main">
     <header class="dash-topbar">
       <div>
-        <div class="dash-greeting">Good afternoon, Jane</div>
+        <div class="dash-greeting" id="dashGreeting">Good afternoon</div>
         <div class="dash-sub">Here's how your plant is doing today.</div>
       </div>
-      <div class="dash-user">JD</div>
+      <div class="dash-user" id="dashUserInitials">--</div>
     </header>
 
     <section class="stat-row">
@@ -66,26 +66,26 @@
         <div class="panel-header">
           <h3>Solar Plant Details</h3>
         </div>
-        <div class="plant-detail-list">
+        <div class="plant-detail-list" id="plantDetailList">
           <div class="plant-detail-row">
             <span>Plant Name</span>
-            <span>Rooftop Array — Sector 4</span>
+            <span id="plantName">—</span>
           </div>
           <div class="plant-detail-row">
             <span>Capacity</span>
-            <span>10 kW</span>
+            <span id="plantCapacity">—</span>
           </div>
           <div class="plant-detail-row">
             <span>Location</span>
-            <span>Ahilyanagar, Maharashtra</span>
+            <span id="plantLocation">—</span>
           </div>
           <div class="plant-detail-row">
             <span>Installed On</span>
-            <span>14 Mar 2023</span>
+            <span id="plantInstalled">—</span>
           </div>
           <div class="plant-detail-row">
             <span>Inverter</span>
-            <span>Growatt 10kW Hybrid</span>
+            <span id="plantInverter">—</span>
           </div>
         </div>
       </div>
@@ -145,6 +145,6 @@
 
 </div>
 
-<script src="script.js"></script>
+<script src="script.js?v=2"></script>
 </body>
 </html>

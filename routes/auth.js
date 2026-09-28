@@ -2,7 +2,7 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const db = require("../db");
+const User = require("../models/User");
 const { requireAuth } = require("../middleware/auth");
 
 const router = express.Router();
@@ -16,87 +16,131 @@ function signToken(user) {
 }
 
 function publicUser(user) {
-  const { password_hash, ...rest } = user;
-  return rest;
+  const json = user.toJSON();
+  delete json.password_hash;
+  return json;
 }
 
 // POST /api/auth/register  — matches register.html fields: name, email, password
-router.post("/register", (req, res) => {
-  const { name, email, password } = req.body;
+router.post("/register", async (req, res, next) => {
+  try {
+    const { name, email, password } = req.body;
 
-  if (!name || !email || !password) {
-    return res.status(400).json({ error: "Please fill in all fields." });
+    if (!name || !email || !password) {
+      return res.status(400).json({ error: "Please fill in all fields." });
+    }
+    if (password.length < 6) {
+      return res.status(400).json({ error: "Password must be at least 6 characters." });
+    }
+
+    const existing = await User.findOne({ email });
+    if (existing) {
+      return res.status(409).json({ error: "An account with that email already exists." });
+    }
+
+    const password_hash = bcrypt.hashSync(password, 10);
+
+    const user = await User.create({
+      name,
+      email,
+      password_hash,
+      role: "owner",
+      status: "pending",
+    });
+
+    const token = signToken(user);
+    res.status(201).json({ token, user: publicUser(user) });
+  } catch (err) {
+    next(err);
   }
-  if (password.length < 6) {
-    return res.status(400).json({ error: "Password must be at least 6 characters." });
-  }
-
-  const existing = db.prepare("SELECT id FROM users WHERE email = ?").get(email);
-  if (existing) {
-    return res.status(409).json({ error: "An account with that email already exists." });
-  }
-
-  const password_hash = bcrypt.hashSync(password, 10);
-
-  const result = db
-    .prepare(
-      `INSERT INTO users (name, email, password_hash, role, status)
-       VALUES (?, ?, ?, 'owner', 'pending')`
-    )
-    .run(name, email, password_hash);
-
-  const user = db.prepare("SELECT * FROM users WHERE id = ?").get(result.lastInsertRowid);
-  const token = signToken(user);
-
-  res.status(201).json({ token, user: publicUser(user) });
 });
 
 // POST /api/auth/login — matches login.html fields: email, password, role
-router.post("/login", (req, res) => {
-  const { email, password } = req.body;
+router.post("/login", async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
 
-  if (!email || !password) {
-    return res.status(400).json({ error: "Please fill in both fields." });
+    if (!email || !password) {
+      return res.status(400).json({ error: "Please fill in both fields." });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ error: "Invalid email or password." });
+    }
+
+    const valid = bcrypt.compareSync(password, user.password_hash);
+    if (!valid) {
+      return res.status(401).json({ error: "Invalid email or password." });
+    }
+
+    const token = signToken(user);
+    res.json({ token, user: publicUser(user) });
+  } catch (err) {
+    next(err);
   }
-
-  const user = db.prepare("SELECT * FROM users WHERE email = ?").get(email);
-  if (!user) {
-    return res.status(401).json({ error: "Invalid email or password." });
-  }
-
-  const valid = bcrypt.compareSync(password, user.password_hash);
-  if (!valid) {
-    return res.status(401).json({ error: "Invalid email or password." });
-  }
-
-  const token = signToken(user);
-  res.json({ token, user: publicUser(user) });
 });
 
 // GET /api/auth/me — returns the logged-in user (used to fill profile.html etc.)
-router.get("/me", requireAuth, (req, res) => {
-  const user = db.prepare("SELECT * FROM users WHERE id = ?").get(req.user.id);
-  if (!user) return res.status(404).json({ error: "User not found." });
-  res.json({ user: publicUser(user) });
+router.get("/me", requireAuth, async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ error: "User not found." });
+    res.json({ user: publicUser(user) });
+  } catch (err) {
+    next(err);
+  }
 });
 
 // PUT /api/auth/me — matches profile.html "Save Changes"
-router.put("/me", requireAuth, (req, res) => {
-  const { fullName, email, phone } = req.body;
+router.put("/me", requireAuth, async (req, res, next) => {
+  try {
+    const { fullName, email, phone } = req.body;
 
-  if (!fullName || !email) {
-    return res.status(400).json({ error: "Name and email cannot be empty." });
+    if (!fullName || !email) {
+      return res.status(400).json({ error: "Name and email cannot be empty." });
+    }
+
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      { name: fullName, email, phone: phone || null },
+      { new: true }
+    );
+
+    if (!user) return res.status(404).json({ error: "User not found." });
+    res.json({ user: publicUser(user) });
+  } catch (err) {
+    next(err);
   }
+});
 
-  db.prepare("UPDATE users SET name = ?, email = ?, phone = ? WHERE id = ?").run(
-    fullName,
-    email,
-    phone || null,
-    req.user.id
-  );
+// PUT /api/auth/password — change your own password (profile.html "Change Password")
+router.put("/password", requireAuth, async (req, res, next) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
 
-  const user = db.prepare("SELECT * FROM users WHERE id = ?").get(req.user.id);
-  res.json({ user: publicUser(user) });
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ error: "Please fill in both password fields." });
+    }
+    if (newPassword.length < 6) {
+      return res.status(400).json({ error: "New password must be at least 6 characters." });
+    }
+
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ error: "User not found." });
+
+    const valid = bcrypt.compareSync(currentPassword, user.password_hash);
+    if (!valid) {
+      return res.status(401).json({ error: "Current password is incorrect." });
+    }
+
+    user.password_hash = bcrypt.hashSync(newPassword, 10);
+    await user.save();
+
+    res.json({ success: true });
+  } catch (err) {
+    next(err);
+  }
 });
 
 module.exports = router;

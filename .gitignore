@@ -3,3 +3,4 @@ node_modules/
 solarledger.db
 solarledger.db-shm
 solarledger.db-wal
+.vscode/ 

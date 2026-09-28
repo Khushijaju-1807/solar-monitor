@@ -34,7 +34,7 @@
         <div class="dash-greeting">Reports</div>
         <div class="dash-sub">Download generation reports for your records or subsidy paperwork.</div>
       </div>
-      <div class="dash-user">JD</div>
+      <div class="dash-user" id="dashUserInitials">--</div>
     </header>
 
     <section class="dash-grid report-quick-grid">
@@ -42,13 +42,13 @@
         <div class="feature-icon" style="margin-bottom:16px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F4A623" stroke-width="1.8"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><path d="M9 17h6M9 13h6"/></svg></div>
         <h3>Monthly Report</h3>
         <p class="report-quick-desc">Generation, savings, and maintenance summary for the current month.</p>
-        <button class="btn-primary report-download-btn" data-report="Monthly Report — July 2026">Download PDF</button>
+        <button class="btn-primary report-download-btn" data-report="Monthly Report" data-type="monthly">Download PDF</button>
       </div>
       <div class="panel-card report-quick-card">
         <div class="feature-icon" style="margin-bottom:16px; background:rgba(89,216,198,0.12);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#59D8C6" stroke-width="1.8"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/><path d="M9 17h6M9 13h6"/></svg></div>
         <h3>Annual Report</h3>
         <p class="report-quick-desc">Full year generation trends and total electricity savings.</p>
-        <button class="btn-secondary report-download-btn" data-report="Annual Report — 2025-26">Download PDF</button>
+        <button class="btn-secondary report-download-btn" data-report="Annual Report" data-type="annual">Download PDF</button>
       </div>
     </section>
 
@@ -66,24 +66,7 @@
           </tr>
         </thead>
         <tbody id="reportTableBody">
-          <tr>
-            <td>Monthly Report — June 2026</td>
-            <td>Monthly</td>
-            <td class="mono">01 Jul 2026</td>
-            <td><button class="report-link-btn" data-report="Monthly Report — June 2026">Download</button></td>
-          </tr>
-          <tr>
-            <td>Monthly Report — May 2026</td>
-            <td>Monthly</td>
-            <td class="mono">01 Jun 2026</td>
-            <td><button class="report-link-btn" data-report="Monthly Report — May 2026">Download</button></td>
-          </tr>
-          <tr>
-            <td>Annual Report — 2024-25</td>
-            <td>Annual</td>
-            <td class="mono">02 Apr 2025</td>
-            <td><button class="report-link-btn" data-report="Annual Report — 2024-25">Download</button></td>
-          </tr>
+          <tr><td colspan="4">Loading…</td></tr>
         </tbody>
       </table>
     </section>
@@ -92,6 +75,6 @@
 
 </div>
 
-<script src="script.js"></script>
+<script src="script.js?v=2"></script>
 </body>
 </html>

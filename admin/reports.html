@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>User Management — SolarLedger</title>
+<title>Reports — SolarLedger</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../style.css">
@@ -20,10 +20,10 @@
     <span class="admin-tag">ADMIN</span>
     <nav class="sidebar-nav">
       <a href="admin-dashboard.html" class="sidebar-link">Dashboard</a>
-      <a href="users.html" class="sidebar-link active">User Management</a>
+      <a href="users.html" class="sidebar-link">User Management</a>
       <a href="plants.html" class="sidebar-link">Plant Management</a>
       <a href="maintenance.html" class="sidebar-link">Maintenance</a>
-      <a href="reports.html" class="sidebar-link">Reports</a>
+      <a href="reports.html" class="sidebar-link active">Reports</a>
     </nav>
     <a href="../index.html" class="sidebar-logout">Log Out</a>
   </aside>
@@ -31,32 +31,33 @@
   <main class="dash-main">
     <header class="dash-topbar">
       <div>
-        <div class="dash-greeting">User Management</div>
-        <div class="dash-sub">Add, verify, and manage every account on the platform.</div>
+        <div class="dash-greeting">Reports</div>
+        <div class="dash-sub">Fleet-wide generation and maintenance reports across every account.</div>
       </div>
       <div class="dash-user admin-avatar" id="adminUserInitials">AD</div>
     </header>
 
     <section class="panel-card wide">
       <div class="panel-header">
-        <h3>All Users</h3>
-        <button class="btn-primary" id="addUserBtn" style="border:none;cursor:pointer;font-family:'Inter',sans-serif;">+ Add User</button>
+        <h3>Fleet Reports</h3>
       </div>
       <table class="report-table">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Plants</th>
-            <th>Status</th>
-            <th></th>
+            <th>Report</th>
+            <th>Owner</th>
+            <th>Type</th>
+            <th>Generated</th>
           </tr>
         </thead>
-        <tbody id="userTableBody">
-          <tr><td colspan="6">Loading…</td></tr>
+        <tbody id="adminReportTableBody">
+          <tr><td colspan="4">Loading…</td></tr>
         </tbody>
       </table>
+      <p style="color:var(--text-muted); font-size:0.85rem; margin-top:14px;">
+        This lists reports each owner has generated from their own Reports page.
+        PDF generation itself still isn't wired up backend-side — see the README.
+      </p>
     </section>
 
   </main>

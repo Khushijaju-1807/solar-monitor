@@ -4,7 +4,8 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
-require("./db"); // creates solarledger.db, tables, and seed data on first run
+const connectDB = require("./config/db");
+connectDB(); // connects to MongoDB Atlas via MONGODB_URI
 
 const authRoutes = require("./routes/auth");
 const plantsRoutes = require("./routes/plants");

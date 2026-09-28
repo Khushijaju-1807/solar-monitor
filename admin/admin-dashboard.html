@@ -24,7 +24,7 @@
       <a href="users.html" class="sidebar-link">User Management</a>
       <a href="plants.html" class="sidebar-link">Plant Management</a>
       <a href="maintenance.html" class="sidebar-link">Maintenance</a>
-      <a href="../reports.html" class="sidebar-link">Reports</a>
+      <a href="reports.html" class="sidebar-link">Reports</a>
     </nav>
     <a href="../index.html" class="sidebar-logout">Log Out</a>
   </aside>
@@ -35,35 +35,35 @@
         <div class="dash-greeting">Admin Overview</div>
         <div class="dash-sub">Fleet-wide status across all plants and users.</div>
       </div>
-      <div class="dash-user admin-avatar">AD</div>
+      <div class="dash-user admin-avatar" id="adminUserInitials">AD</div>
     </header>
 
     <section class="stat-row">
       <div class="stat-card">
         <div class="stat-label">Total Users</div>
-        <div class="stat-value mono cyan">312</div>
-        <div class="stat-delta up">▲ 8 new this week</div>
+        <div class="stat-value mono cyan" id="statTotalUsers">—</div>
+        <div class="stat-delta neutral">Across the whole platform</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Total Plants</div>
-        <div class="stat-value mono">131</div>
-        <div class="stat-delta neutral">128 online now</div>
+        <div class="stat-value mono" id="statTotalPlants">—</div>
+        <div class="stat-delta neutral">Registered plants</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Active Requests</div>
-        <div class="stat-value mono amber">14</div>
-        <div class="stat-delta down">3 overdue</div>
+        <div class="stat-value mono amber" id="statActiveRequests">—</div>
+        <div class="stat-delta neutral">Not yet closed</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Total Generated</div>
         <div class="stat-value mono gold">48.2K <span>kWh</span></div>
-        <div class="stat-delta up">▲ 4.6% this month</div>
+        <div class="stat-delta neutral">Demo data — no aggregation API yet</div>
       </div>
     </section>
 
     <section class="panel-card wide">
       <div class="panel-header">
-        <h3>Fleet Generation — Last 7 Days</h3>
+        <h3>Fleet Generation — Last 7 Days <span style="font-size:11px;font-weight:400;color:var(--text-muted,#8FA3BF);">(demo data)</span></h3>
       </div>
       <div class="chart-wrap">
         <canvas id="fleetChart"></canvas>
@@ -74,6 +74,6 @@
 
 </div>
 
-<script src="../script.js"></script>
+<script src="../script.js?v=2"></script>
 </body>
 </html>

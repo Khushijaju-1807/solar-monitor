@@ -23,7 +23,7 @@
       <a href="users.html" class="sidebar-link">User Management</a>
       <a href="plants.html" class="sidebar-link active">Plant Management</a>
       <a href="maintenance.html" class="sidebar-link">Maintenance</a>
-      <a href="../reports.html" class="sidebar-link">Reports</a>
+      <a href="reports.html" class="sidebar-link">Reports</a>
     </nav>
     <a href="../index.html" class="sidebar-logout">Log Out</a>
   </aside>
@@ -34,7 +34,7 @@
         <div class="dash-greeting">Plant Management</div>
         <div class="dash-sub">Register and oversee every plant across every site.</div>
       </div>
-      <div class="dash-user admin-avatar">AD</div>
+      <div class="dash-user admin-avatar" id="adminUserInitials">AD</div>
     </header>
 
     <section class="panel-card wide">
@@ -54,38 +54,7 @@
           </tr>
         </thead>
         <tbody id="plantTableBody">
-          <tr>
-            <td>Rooftop Array — Sector 4</td>
-            <td>Jane Doe</td>
-            <td class="mono">10 kW</td>
-            <td>Ahilyanagar, MH</td>
-            <td><span class="ticket-status assigned">Online</span></td>
-            <td><button class="report-link-btn plant-remove-btn">Remove</button></td>
-          </tr>
-          <tr>
-            <td>Farmhouse Array</td>
-            <td>Ravi Kulkarni</td>
-            <td class="mono">6.5 kW</td>
-            <td>Pune, MH</td>
-            <td><span class="ticket-status assigned">Online</span></td>
-            <td><button class="report-link-btn plant-remove-btn">Remove</button></td>
-          </tr>
-          <tr>
-            <td>Warehouse Roof — Unit 2</td>
-            <td>Ravi Kulkarni</td>
-            <td class="mono">22 kW</td>
-            <td>Pune, MH</td>
-            <td><span class="ticket-status in-progress">Fault</span></td>
-            <td><button class="report-link-btn plant-remove-btn">Remove</button></td>
-          </tr>
-          <tr>
-            <td>Residence Rooftop</td>
-            <td>Meera Shah</td>
-            <td class="mono">4 kW</td>
-            <td>Nashik, MH</td>
-            <td><span class="ticket-status closed">Offline</span></td>
-            <td><button class="report-link-btn plant-remove-btn">Remove</button></td>
-          </tr>
+          <tr><td colspan="6">Loading…</td></tr>
         </tbody>
       </table>
     </section>
@@ -94,6 +63,6 @@
 
 </div>
 
-<script src="../script.js"></script>
+<script src="../script.js?v=2"></script>
 </body>
 </html>

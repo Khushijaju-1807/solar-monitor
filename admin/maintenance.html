@@ -23,7 +23,7 @@
       <a href="users.html" class="sidebar-link">User Management</a>
       <a href="plants.html" class="sidebar-link">Plant Management</a>
       <a href="maintenance.html" class="sidebar-link active">Maintenance</a>
-      <a href="../reports.html" class="sidebar-link">Reports</a>
+      <a href="reports.html" class="sidebar-link">Reports</a>
     </nav>
     <a href="../index.html" class="sidebar-logout">Log Out</a>
   </aside>
@@ -34,7 +34,7 @@
         <div class="dash-greeting">Maintenance Management</div>
         <div class="dash-sub">Assign tickets, set priority, and track every job to close.</div>
       </div>
-      <div class="dash-user admin-avatar">AD</div>
+      <div class="dash-user admin-avatar" id="adminUserInitials">AD</div>
     </header>
 
     <section class="panel-card wide">
@@ -53,48 +53,7 @@
           </tr>
         </thead>
         <tbody id="adminTicketBody">
-          <tr>
-            <td>Inverter Fault</td>
-            <td>Jane Doe</td>
-            <td>Rooftop Array — Sector 4</td>
-            <td>Unassigned</td>
-            <td><span class="ticket-status in-progress">In Progress</span></td>
-            <td>
-              <select class="report-link-btn ticket-status-select">
-                <option value="assigned">Assigned</option>
-                <option value="in-progress" selected>In Progress</option>
-                <option value="closed">Closed</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td>Low Output — Cluster B</td>
-            <td>Ravi Kulkarni</td>
-            <td>Warehouse Roof — Unit 2</td>
-            <td>Sameer Patil</td>
-            <td><span class="ticket-status assigned">Assigned</span></td>
-            <td>
-              <select class="report-link-btn ticket-status-select">
-                <option value="assigned" selected>Assigned</option>
-                <option value="in-progress">In Progress</option>
-                <option value="closed">Closed</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td>Physical Damage — Panel 4</td>
-            <td>Meera Shah</td>
-            <td>Residence Rooftop</td>
-            <td>Sameer Patil</td>
-            <td><span class="ticket-status closed">Closed</span></td>
-            <td>
-              <select class="report-link-btn ticket-status-select">
-                <option value="assigned">Assigned</option>
-                <option value="in-progress">In Progress</option>
-                <option value="closed" selected>Closed</option>
-              </select>
-            </td>
-          </tr>
+          <tr><td colspan="6">Loading…</td></tr>
         </tbody>
       </table>
     </section>
@@ -103,6 +62,6 @@
 
 </div>
 
-<script src="../script.js"></script>
+<script src="../script.js?v=2"></script>
 </body>
 </html>
