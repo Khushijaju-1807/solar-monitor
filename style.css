@@ -178,6 +178,7 @@ nav{
   display:inline-block;
 }
 .btn-secondary{
+  background:transparent;
   border:1px solid var(--border-soft);
   color:var(--text-primary);
   padding:13px 24px;
@@ -185,8 +186,10 @@ nav{
   font-weight:500;
   font-size:0.95rem;
   display:inline-block;
+  font-family:inherit;
+  cursor:pointer;
 }
-.btn-secondary:hover{border-color:var(--text-muted);}
+.btn-secondary:hover{border-color:var(--text-muted); background:rgba(143,163,191,0.08);}
 
 /* TICKER */
 .ticker{

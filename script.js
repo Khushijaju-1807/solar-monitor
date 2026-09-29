@@ -85,6 +85,39 @@ document.querySelectorAll('.sidebar-logout').forEach((link) => {
   link.addEventListener('click', () => clearSession());
 });
 
+// ---- server-verified session ---------------------------------------------
+// localStorage alone proves nothing (a stale or hand-edited token still "looks"
+// logged in), so ask the backend. Returns the real user, or null.
+async function verifySession() {
+  const token = getToken();
+  if (!token) return null;
+  try {
+    const res = await fetch(API_BASE + '/auth/me', { headers: { Authorization: 'Bearer ' + token } });
+    if (!res.ok) { clearSession(); return null; }
+    const data = await res.json();
+    if (!data || !data.user) { clearSession(); return null; }
+    setSession(token, data.user); // refresh cached name/role from the server
+    return data.user;
+  } catch (e) {
+    return null; // backend unreachable: don't open a protected page
+  }
+}
+
+// ---- global page guard ----------------------------------------------------
+// Every page except these is protected. Runs on every page load, so it no
+// longer depends on a particular element ID existing in the HTML.
+const PUBLIC_PAGES = ['', 'index.html', 'login.html', 'register.html'];
+const CURRENT_PAGE = window.location.pathname.replace(/\\/g, '/').split('/').pop();
+if (!PUBLIC_PAGES.includes(CURRENT_PAGE)) {
+  document.documentElement.style.visibility = 'hidden'; // hide until verified
+  (async () => {
+    const user = await verifySession();
+    if (!user) { window.location.replace(ROOT + 'login.html'); return; }
+    if (IS_ADMIN_PAGE && user.role !== 'admin') { window.location.replace(ROOT + 'dashboard.html'); return; }
+    document.documentElement.style.visibility = '';
+  })();
+}
+
 // ============================================================================
 // Hero solar-cell sunrise sweep (unchanged — purely decorative)
 // ============================================================================
@@ -134,10 +167,11 @@ if (revealEls.length) {
 
 // If someone who's already logged in lands back on login/register, send them on.
 if (document.getElementById('loginForm') || document.getElementById('registerForm')) {
-  const existing = getUser();
-  if (existing && getToken()) {
-    window.location.href = existing.role === 'admin' ? 'admin/admin-dashboard.html' : 'dashboard.html';
-  }
+  verifySession().then((existing) => {
+    if (existing) {
+      window.location.href = existing.role === 'admin' ? 'admin/admin-dashboard.html' : 'dashboard.html';
+    }
+  });
 }
 
 // ============================================================================
@@ -421,6 +455,23 @@ if (ticketList && !IS_ADMIN_PAGE) {
 // ============================================================================
 // Reports (owner-facing)
 // ============================================================================
+async function downloadReportPdf(id, title) {
+  const res = await fetch(`${API_BASE}/reports/${id}/pdf`, { headers: { Authorization: 'Bearer ' + getToken() } });
+  if (!res.ok) {
+    let msg = 'Could not generate the PDF.';
+    try { msg = (await res.json()).error || msg; } catch (e) { /* not JSON */ }
+    throw new Error(msg);
+  }
+  const url = URL.createObjectURL(await res.blob());
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = title.replace(/[^\w\- ]+/g, '').trim().replace(/\s+/g, '_') + '.pdf';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
 const reportTableBody = document.getElementById('reportTableBody');
 if (reportTableBody) {
   (async () => {
@@ -439,12 +490,13 @@ if (reportTableBody) {
             <td>${r.title}</td>
             <td>${r.report_type}</td>
             <td>${formatDate(r.generated_on)}</td>
-            <td><button class="btn-secondary report-link-btn" data-report="${r.title}">Download</button></td>
+            <td><button class="btn-secondary report-link-btn" data-id="${r.id}" data-report="${r.title}">Download</button></td>
           </tr>
         `).join('');
         document.querySelectorAll('.report-link-btn[data-report]').forEach(btn => {
-          btn.addEventListener('click', function () {
-            alert(`"${this.dataset.report}" would download here once PDF generation is added to the backend.`);
+          btn.addEventListener('click', async function () {
+            try { await downloadReportPdf(this.dataset.id, this.dataset.report); }
+            catch (err) { alert(err.message); }
           });
         });
       } catch (err) {
@@ -456,14 +508,17 @@ if (reportTableBody) {
 
     document.querySelectorAll('.report-download-btn').forEach(btn => {
       btn.addEventListener('click', async function () {
-        const title = this.dataset.report;
         const type = this.dataset.type || 'monthly';
+        const now = new Date();
+        const title = type === 'annual'
+          ? `${this.dataset.report} - ${now.getFullYear()}`
+          : `${this.dataset.report} - ${now.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}`;
         try {
-          await api('/reports', {
+          const { report } = await api('/reports', {
             method: 'POST',
             body: JSON.stringify({ title, report_type: type }),
           });
-          alert(`"${title}" recorded. PDF generation isn't wired up yet — this just logs the report in your history below.`);
+          await downloadReportPdf(report.id, title);
           loadReports();
         } catch (err) {
           alert(err.message);
@@ -841,6 +896,52 @@ if (adminTicketBody) {
       });
     } catch (err) {
       adminTicketBody.innerHTML = `<tr><td colspan="6">${err.message}</td></tr>`;
+    }
+  })();
+}
+
+// ============================================================================
+// Admin: Reports (fleet-wide report history)
+// ============================================================================
+if (IS_ADMIN_PAGE && CURRENT_PAGE === 'reports.html') {
+  (async () => {
+    const user = requireAuth('admin');
+    if (!user) return;
+
+    const initialsEl = document.getElementById('adminUserInitials');
+    if (initialsEl) initialsEl.textContent = initials(user.name);
+
+    const body = document.getElementById('adminReportBody') || document.querySelector('tbody');
+    if (!body) return;
+
+    const esc = (v) => String(v == null ? '' : v).replace(/[&<>"']/g, (c) => (
+      { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+    ));
+
+    try {
+      const { reports } = await api('/reports/all');
+      if (!reports.length) {
+        body.innerHTML = '<tr><td colspan="4">No reports have been generated yet.</td></tr>';
+        return;
+      }
+      body.innerHTML = reports.map((r) => `
+        <tr>
+          <td><a href="#" class="admin-report-link" data-id="${esc(r.id)}" data-title="${esc(r.title)}">${esc(r.title)}</a></td>
+          <td>${esc(r.owner_name)}</td>
+          <td>${esc(r.report_type)}</td>
+          <td>${formatDate(r.generated_on)}</td>
+        </tr>
+      `).join('');
+
+      body.querySelectorAll('.admin-report-link').forEach((link) => {
+        link.addEventListener('click', async function (e) {
+          e.preventDefault();
+          try { await downloadReportPdf(this.dataset.id, this.dataset.title); }
+          catch (err) { alert(err.message); }
+        });
+      });
+    } catch (err) {
+      body.innerHTML = `<tr><td colspan="4">${esc(err.message)}</td></tr>`;
     }
   })();
 }
